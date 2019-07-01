@@ -16,8 +16,7 @@ generate:
 	protoc \
 		-I proto \
 		-I vendor/github.com/grpc-ecosystem/grpc-gateway/ \
-		-I vendor/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		-I vendor/ \
+		-I third_party/googleapis \
 		--go_out=plugins=grpc,paths=source_relative:./proto \
 		--grpc-gateway_out=:$$GOPATH/src/ \
 		--swagger_out=third_party/OpenAPI/ \
@@ -27,8 +26,8 @@ generate:
 	statik -m -f -src third_party/OpenAPI/
 
 install:
-	go install \
-		./vendor/github.com/golang/protobuf/protoc-gen-go \
-		./vendor/github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
-		./vendor/github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger \
-		./vendor/github.com/rakyll/statik
+	GO111MODULE=on go get \
+		github.com/golang/protobuf/protoc-gen-go \
+		github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
+		github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger \
+		github.com/rakyll/statik
