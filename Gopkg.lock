@@ -17,27 +17,6 @@
   version = "v3.1.2"
 
 [[projects]]
-  branch = "master"
-  digest = "1:13e0093ce22c5a221d689c590c05a4e34810bfe08a9358e009b0569bb37dd547"
-  name = "github.com/gogo/gateway"
-  packages = ["."]
-  pruneopts = "NUT"
-  revision = "6d3dfbe4e3b52add3800488f526462e69bce526a"
-
-[[projects]]
-  digest = "1:e1827a8b8c38ef43aff6b8fc65a15aca650fbb3248a2be05ae369fc1199e6b86"
-  name = "github.com/gogo/protobuf"
-  packages = [
-    "jsonpb",
-    "proto",
-    "sortkeys",
-    "types",
-  ]
-  pruneopts = "NUT"
-  revision = "636bf0302bc95575d69441b25a2603156ffdddf1"
-  version = "v1.1.1"
-
-[[projects]]
   digest = "1:e2b86e41f3d669fc36b50d31d32d22c8ac656c75aa5ea89717ce7177e134ff2a"
   name = "github.com/golang/glog"
   packages = ["."]
@@ -205,7 +184,6 @@
   analyzer-version = 1
   input-imports = [
     "github.com/gofrs/uuid",
-    "github.com/gogo/gateway",
     "github.com/golang/protobuf/proto",
     "github.com/golang/protobuf/protoc-gen-go",
     "github.com/golang/protobuf/ptypes/empty",

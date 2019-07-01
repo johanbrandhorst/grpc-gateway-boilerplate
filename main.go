@@ -11,7 +11,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/gogo/gateway"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/rakyll/statik/fs"
 	"google.golang.org/grpc"
@@ -81,7 +80,7 @@ func main() {
 		log.Fatalln("Failed to dial server:", err)
 	}
 
-	jsonpb := &gateway.JSONPb{
+	jsonpb := &runtime.JSONPb{
 		EmitDefaults: true,
 		Indent:       "  ",
 		OrigName:     true,
