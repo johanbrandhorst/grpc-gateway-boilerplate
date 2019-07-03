@@ -3,8 +3,6 @@
 All the boilerplate you need to get started with writing grpc-gateway powered
 REST services in Go.
 
-[Serverless demo on GCP Cloud Run](https://grpc-gateway-boilerplate-t467tqua7a-uc.a.run.app/openapi-ui)
-
 ## Running
 
 Running `main.go` starts a web server on https://0.0.0.0:11000. You can configure
