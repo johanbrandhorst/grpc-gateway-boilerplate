@@ -23,30 +23,30 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 };
 
 service UserService {
-    rpc AddUser(google.protobuf.Empty) returns (User) {
-        option (google.api.http) = {
-            // Route to this method from POST requests to /api/v1/users
-            post: "/api/v1/users"
-        };
-        option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
-          summary: "Add a user"
-          description: "Add a user to the server."
-          tags: "Users"
-        };
-    }
-    rpc ListUsers(google.protobuf.Empty) returns (stream User) {
-        option (google.api.http) = {
-            // Route to this method from GET requests to /api/v1/users
-            get: "/api/v1/users"
-        };
-        option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
-          summary: "List users"
-          description: "List all users on the server."
-          tags: "Users"
-        };
-    }
+  rpc AddUser(google.protobuf.Empty) returns (User) {
+    option (google.api.http) = {
+      // Route to this method from POST requests to /api/v1/users
+      post: "/api/v1/users"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+      summary: "Add a user"
+      description: "Add a user to the server."
+      tags: "Users"
+    };
+  }
+  rpc ListUsers(google.protobuf.Empty) returns (stream User) {
+    option (google.api.http) = {
+      // Route to this method from GET requests to /api/v1/users
+      get: "/api/v1/users"
+    };
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+      summary: "List users"
+      description: "List all users on the server."
+      tags: "Users"
+    };
+  }
 }
 
 message User {
-    string id = 1;
+  string id = 1;
 }
