@@ -14,7 +14,6 @@ import (
 	"net/http"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/utilities"
 	"google.golang.org/grpc"
@@ -30,7 +29,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
 func request_UserService_AddUser_0(ctx context.Context, marshaler runtime.Marshaler, client UserServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq AddUserRequest
 	var metadata runtime.ServerMetadata
 
 	msg, err := client.AddUser(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -39,7 +38,7 @@ func request_UserService_AddUser_0(ctx context.Context, marshaler runtime.Marsha
 }
 
 func request_UserService_ListUsers_0(ctx context.Context, marshaler runtime.Marshaler, client UserServiceClient, req *http.Request, pathParams map[string]string) (UserService_ListUsersClient, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq ListUsersRequest
 	var metadata runtime.ServerMetadata
 
 	stream, err := client.ListUsers(ctx, &protoReq)

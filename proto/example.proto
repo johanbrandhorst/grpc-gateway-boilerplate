@@ -2,7 +2,6 @@ syntax="proto3";
 
 package example;
 
-import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
@@ -23,7 +22,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 };
 
 service UserService {
-  rpc AddUser(google.protobuf.Empty) returns (User) {
+  rpc AddUser(AddUserRequest) returns (User) {
     option (google.api.http) = {
       // Route to this method from POST requests to /api/v1/users
       post: "/api/v1/users"
@@ -34,7 +33,7 @@ service UserService {
       tags: "Users"
     };
   }
-  rpc ListUsers(google.protobuf.Empty) returns (stream User) {
+  rpc ListUsers(ListUsersRequest) returns (stream User) {
     option (google.api.http) = {
       // Route to this method from GET requests to /api/v1/users
       get: "/api/v1/users"
@@ -46,6 +45,10 @@ service UserService {
     };
   }
 }
+
+message AddUserRequest {}
+
+message ListUsersRequest{}
 
 message User {
   string id = 1;
