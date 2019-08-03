@@ -11,6 +11,8 @@ import (
 	_ "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -167,6 +169,17 @@ func (x *userServiceListUsersClient) Recv() (*User, error) {
 type UserServiceServer interface {
 	AddUser(context.Context, *empty.Empty) (*User, error)
 	ListUsers(*empty.Empty, UserService_ListUsersServer) error
+}
+
+// UnimplementedUserServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedUserServiceServer struct {
+}
+
+func (*UnimplementedUserServiceServer) AddUser(ctx context.Context, req *empty.Empty) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddUser not implemented")
+}
+func (*UnimplementedUserServiceServer) ListUsers(req *empty.Empty, srv UserService_ListUsersServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
 }
 
 func RegisterUserServiceServer(s *grpc.Server, srv UserServiceServer) {
