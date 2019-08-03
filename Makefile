@@ -15,7 +15,7 @@ generate:
 	# proto/example.proto is the location of the protofile we use.
 	protoc \
 		-I proto \
-		-I vendor/github.com/grpc-ecosystem/grpc-gateway/ \
+		-I third_party/grpc-gateway/ \
 		-I third_party/googleapis \
 		--go_out=plugins=grpc,paths=source_relative:./proto \
 		--grpc-gateway_out=:$$GOPATH/src/ \

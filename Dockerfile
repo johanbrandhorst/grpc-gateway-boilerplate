@@ -1,8 +1,8 @@
 # Build stage
 FROM golang AS build-env
-ADD . /go/src/github.com/johanbrandhorst/grpc-gateway-boilerplate
+ADD . /src/grpc-gateway-boilerplate
 ENV CGO_ENABLED=0
-RUN cd /go/src/github.com/johanbrandhorst/grpc-gateway-boilerplate && go build -o /app
+RUN cd /src/grpc-gateway-boilerplate && go build -o /app
 
 # Production stage
 FROM scratch
