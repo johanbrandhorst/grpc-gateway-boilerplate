@@ -48,7 +48,7 @@ service UserService {
 
 message AddUserRequest {}
 
-message ListUsersRequest{}
+message ListUsersRequest {}
 
 message User {
   string id = 1;
