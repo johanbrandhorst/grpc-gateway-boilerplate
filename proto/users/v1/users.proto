@@ -43,7 +43,9 @@ service UserService {
   }
 }
 
-message AddUserRequest {}
+message AddUserRequest {
+  string email = 1;
+}
 
 message AddUserResponse {
   User user = 1;
@@ -57,4 +59,5 @@ message ListUsersResponse {
 
 message User {
   string id = 1;
+  string email = 2;
 }
