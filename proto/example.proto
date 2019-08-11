@@ -47,10 +47,13 @@ service UserService {
   }
 }
 
-message AddUserRequest {}
+message AddUserRequest {
+  string email = 1;
+}
 
 message ListUsersRequest {}
 
 message User {
   string id = 1;
+  string email = 2;
 }

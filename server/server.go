@@ -23,12 +23,13 @@ func New() *Backend {
 }
 
 // AddUser adds a user to the in-memory store.
-func (b *Backend) AddUser(ctx context.Context, _ *pbExample.AddUserRequest) (*pbExample.User, error) {
+func (b *Backend) AddUser(ctx context.Context, req *pbExample.AddUserRequest) (*pbExample.User, error) {
 	b.mu.Lock()
 	defer b.mu.Unlock()
 
 	user := &pbExample.User{
 		Id: uuid.Must(uuid.NewV4()).String(),
+		Email: req.GetEmail(),
 	}
 	b.users = append(b.users, user)
 

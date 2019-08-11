@@ -82,12 +82,20 @@
   },
   "definitions": {
     "exampleAddUserRequest": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
     },
     "exampleUser": {
       "type": "object",
       "properties": {
         "id": {
+          "type": "string"
+        },
+        "email": {
           "type": "string"
         }
       }
