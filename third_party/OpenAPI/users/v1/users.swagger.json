@@ -83,6 +83,38 @@
           "Users"
         ]
       }
+    },
+    "/api/v1/users/{id}": {
+      "get": {
+        "summary": "Get a user by their ID",
+        "description": "Gets a user from the server.",
+        "operationId": "UserService_GetUser",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/v1User"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
+      }
     }
   },
   "definitions": {
@@ -122,6 +154,14 @@
       }
     },
     "v1AddUserResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1GetUserResponse": {
       "type": "object",
       "properties": {
         "user": {

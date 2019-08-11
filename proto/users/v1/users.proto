@@ -29,6 +29,18 @@ service UserService {
       tags: "Users"
     };
   }
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {
+      // Route to this method from GET requests to /api/v1/users/{id}
+      get: "/api/v1/users/{id}"
+      response_body: "user"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get a user by their ID"
+      description: "Gets a user from the server."
+      tags: "Users"
+    };
+  }
   rpc ListUsers(ListUsersRequest) returns (stream ListUsersResponse) {
     option (google.api.http) = {
       // Route to this method from GET requests to /api/v1/users
@@ -48,6 +60,14 @@ message AddUserRequest {
 }
 
 message AddUserResponse {
+  User user = 1;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message GetUserResponse {
   User user = 1;
 }
 

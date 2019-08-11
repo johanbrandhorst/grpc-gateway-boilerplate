@@ -6,6 +6,8 @@ import (
 
 	"github.com/gofrs/uuid"
 	usersv1 "github.com/johanbrandhorst/grpc-gateway-boilerplate/proto/users/v1"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 // Backend implements the protobuf interface
@@ -35,6 +37,20 @@ func (b *Backend) AddUser(ctx context.Context, req *usersv1.AddUserRequest) (*us
 	return &usersv1.AddUserResponse{
 		User: user,
 	}, nil
+}
+
+// GetUser gets a user from the store.
+func (b *Backend) GetUser(ctx context.Context, req *usersv1.GetUserRequest) (*usersv1.GetUserResponse, error) {
+	b.mu.RLock()
+	defer b.mu.RUnlock()
+
+	for _, user := range b.users {
+		if user.Id == req.GetId() {
+			return &usersv1.GetUserResponse{User: user}, nil
+		}
+	}
+
+	return nil, status.Errorf(codes.NotFound, "user with ID %q could not be found", req.GetId())
 }
 
 // ListUsers lists all users in the store.
