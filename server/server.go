@@ -5,6 +5,8 @@ import (
 	"sync"
 
 	"github.com/gofrs/uuid"
+	"google.golang.org/grpc/status"
+	"google.golang.org/grpc/codes"
 
 	pbExample "github.com/johanbrandhorst/grpc-gateway-boilerplate/proto"
 )
@@ -34,6 +36,20 @@ func (b *Backend) AddUser(ctx context.Context, req *pbExample.AddUserRequest) (*
 	b.users = append(b.users, user)
 
 	return user, nil
+}
+
+// GetUser gets a user from the store.
+func (b *Backend) GetUser(ctx context.Context, req *pbExample.GetUserRequest) (*pbExample.User, error) {
+	b.mu.RLock()
+	defer b.mu.RUnlock()
+
+	for _, user := range b.users {
+		if user.Id == req.GetId() {
+			return user, nil
+		}
+	}
+
+	return nil, status.Errorf(codes.NotFound, "user with ID %q could not be found", req.GetId())
 }
 
 // ListUsers lists all users in the store.
