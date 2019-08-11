@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package users.v1;
 
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
@@ -57,6 +59,7 @@ service UserService {
 
 message AddUserRequest {
   string email = 1;
+  google.protobuf.Struct metadata = 2;
 }
 
 message AddUserResponse {
@@ -80,4 +83,6 @@ message ListUsersResponse {
 message User {
   string id = 1;
   string email = 2;
+  google.protobuf.Timestamp create_time = 3;
+  google.protobuf.Struct metadata = 4;
 }

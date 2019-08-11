@@ -8,6 +8,7 @@ import (
 	usersv1 "github.com/johanbrandhorst/grpc-gateway-boilerplate/proto/users/v1"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // Backend implements the protobuf interface
@@ -29,8 +30,10 @@ func (b *Backend) AddUser(ctx context.Context, req *usersv1.AddUserRequest) (*us
 	defer b.mu.Unlock()
 
 	user := &usersv1.User{
-		Id:    uuid.Must(uuid.NewV4()).String(),
-		Email: req.GetEmail(),
+		Id:         uuid.Must(uuid.NewV4()).String(),
+		Email:      req.GetEmail(),
+		CreateTime: timestamppb.Now(),
+		Metadata:   req.GetMetadata(),
 	}
 	b.users = append(b.users, user)
 
