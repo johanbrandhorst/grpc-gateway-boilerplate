@@ -5,7 +5,6 @@ import (
 	"sync"
 
 	"github.com/gofrs/uuid"
-	"github.com/golang/protobuf/ptypes/empty"
 
 	pbExample "github.com/johanbrandhorst/grpc-gateway-boilerplate/proto"
 )
@@ -24,7 +23,7 @@ func New() *Backend {
 }
 
 // AddUser adds a user to the in-memory store.
-func (b *Backend) AddUser(ctx context.Context, _ *empty.Empty) (*pbExample.User, error) {
+func (b *Backend) AddUser(ctx context.Context, _ *pbExample.AddUserRequest) (*pbExample.User, error) {
 	b.mu.Lock()
 	defer b.mu.Unlock()
 
@@ -37,7 +36,7 @@ func (b *Backend) AddUser(ctx context.Context, _ *empty.Empty) (*pbExample.User,
 }
 
 // ListUsers lists all users in the store.
-func (b *Backend) ListUsers(_ *empty.Empty, srv pbExample.UserService_ListUsersServer) error {
+func (b *Backend) ListUsers(_ *pbExample.ListUsersRequest, srv pbExample.UserService_ListUsersServer) error {
 	b.mu.RLock()
 	defer b.mu.RUnlock()
 
