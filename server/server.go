@@ -2,10 +2,12 @@ package server
 
 import (
 	"context"
+	"net/http"
 	"sync"
 
 	"github.com/gofrs/uuid"
 	"github.com/golang/protobuf/ptypes"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -96,4 +98,14 @@ func (b *Backend) UpdateUser(ctx context.Context, req *pbExample.UpdateUserReque
 	}
 
 	return u, nil
+}
+
+// CustomErrorHandler defines the way we want errors to be shown to the users.
+func CustomErrorHandler(ctx context.Context, mux *runtime.ServeMux, marshaler runtime.Marshaler, w http.ResponseWriter, req *http.Request, err error) {
+	st := status.Convert(err)
+
+	httpStatus := runtime.HTTPStatusFromCode(st.Code())
+	w.WriteHeader(httpStatus)
+
+	w.Write([]byte(st.Message()))
 }

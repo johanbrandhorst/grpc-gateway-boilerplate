@@ -76,7 +76,9 @@ func main() {
 		log.Fatalln("Failed to dial server:", err)
 	}
 
-	gwmux := runtime.NewServeMux()
+	gwmux := runtime.NewServeMux(
+		runtime.WithErrorHandler(server.CustomErrorHandler),
+	)
 	err = pbExample.RegisterUserServiceHandler(context.Background(), gwmux, conn)
 	if err != nil {
 		log.Fatalln("Failed to register gateway:", err)
