@@ -4,6 +4,7 @@ package example;
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/field_mask.proto";
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
@@ -58,6 +59,18 @@ service UserService {
       tags: "Users"
     };
   }
+  rpc UpdateUser(UpdateUserRequest) returns (User) {
+    option (google.api.http) = {
+      // Route to this method from PATCH requests to /api/v1/users/{user.id}
+      patch: "/api/v1/user/{user.id}"
+      body: "user"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update a user"
+      description: "Change properties of a user."
+      tags: "Users"
+    };
+  }
 }
 
 message AddUserRequest {
@@ -71,9 +84,17 @@ message GetUserRequest {
 
 message ListUsersRequest {}
 
+message UpdateUserRequest {
+  User user = 1;
+  google.protobuf.FieldMask update_mask = 2;
+}
+
 message User {
+  // Id uniquely identifies a user. Output only.
   string id = 1;
   string email = 2;
+  // Output only.
   google.protobuf.Timestamp create_time = 3;
+  // Output only.
   google.protobuf.Struct metadata = 4;
 }
