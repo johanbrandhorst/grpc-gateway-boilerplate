@@ -70,3 +70,31 @@ func (b *Backend) ListUsers(_ *usersv1.ListUsersRequest, srv usersv1.UserService
 
 	return nil
 }
+
+// UpdateUser updates properties on a user.
+func (b *Backend) UpdateUser(ctx context.Context, req *usersv1.UpdateUserRequest) (*usersv1.UpdateUserResponse, error) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+
+	var u *usersv1.User
+	for _, user := range b.users {
+		if user.Id == req.GetUser().GetId() {
+			u = user
+			break
+		}
+	}
+	if u == nil {
+		return nil, status.Errorf(codes.NotFound, "user with ID %q could not be found", req.GetUser().GetId())
+	}
+
+	for _, path := range req.GetUpdateMask().GetPaths() {
+		switch path {
+		case "email":
+			u.Email = req.GetUser().GetEmail()
+		default:
+			return nil, status.Errorf(codes.InvalidArgument, "cannot update field %q on user", path)
+		}
+	}
+
+	return &usersv1.UpdateUserResponse{User: u}, nil
+}
