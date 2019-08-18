@@ -43,6 +43,16 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/exampleAddUserRequest"
+            }
+          }
+        ],
         "tags": [
           "Users"
         ]
@@ -50,6 +60,9 @@
     }
   },
   "definitions": {
+    "exampleAddUserRequest": {
+      "type": "object"
+    },
     "exampleUser": {
       "type": "object",
       "properties": {
