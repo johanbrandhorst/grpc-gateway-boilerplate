@@ -11,6 +11,8 @@ Running `main.go` starts a web server on https://0.0.0.0:11000. You can configur
 the port used with the `$PORT` environment variable, and to serve on HTTP set
 `$SERVE_HTTP=true`.
 
+An OpenAPI UI is served on https://0.0.0.0:11000/openapi-ui/
+
 ## Requirements
 
 Generating the files requires the `protoc` protobuf compiler.
