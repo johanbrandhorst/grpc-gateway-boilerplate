@@ -1,0 +1,10 @@
+{
+    "name": "grpc-gateway-boilerplate",
+    "env": {
+        "SERVE_HTTP": {
+            "description": "Whether to use HTTP to serve, instead of HTTPS",
+            "value": "true",
+            "required": false
+        }
+    }
+  }
