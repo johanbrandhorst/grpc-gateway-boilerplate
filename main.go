@@ -25,21 +25,17 @@ import (
 	_ "github.com/johanbrandhorst/grpc-gateway-boilerplate/statik"
 )
 
-// serveOpenAPI serves an OpenAPI UI on /openapi-ui/
+// getOpenAPIHandler serves an OpenAPI UI.
 // Adapted from https://github.com/philips/grpc-gateway-example/blob/a269bcb5931ca92be0ceae6130ac27ae89582ecc/cmd/serve.go#L63
-func serveOpenAPI(mux *http.ServeMux) error {
+func getOpenAPIHandler() http.Handler {
 	mime.AddExtensionType(".svg", "image/svg+xml")
 
 	statikFS, err := fs.New()
 	if err != nil {
-		return err
+		panic("creating OpenAPI filesystem: " + err.Error())
 	}
 
-	// Expose files in static on <host>/openapi-ui
-	fileServer := http.FileServer(statikFS)
-	prefix := "/openapi-ui/"
-	mux.Handle(prefix, http.StripPrefix(prefix, fileServer))
-	return nil
+	return http.FileServer(statikFS)
 }
 
 func main() {
@@ -93,12 +89,7 @@ func main() {
 		log.Fatalln("Failed to register gateway:", err)
 	}
 
-	mux := http.NewServeMux()
-	mux.Handle("/", gwmux)
-	err = serveOpenAPI(mux)
-	if err != nil {
-		log.Fatalln("Failed to serve OpenAPI UI")
-	}
+	oa := getOpenAPIHandler()
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -106,20 +97,24 @@ func main() {
 	}
 	gatewayAddr := "0.0.0.0:" + port
 	gwServer := &http.Server{
-		Addr:    gatewayAddr,
-		Handler: mux,
+		Addr: gatewayAddr,
+		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if strings.HasPrefix(r.URL.Path, "/api") {
+				gwmux.ServeHTTP(w, r)
+				return
+			}
+			oa.ServeHTTP(w, r)
+		}),
 	}
 	// Empty parameters mean use the TLS Config specified with the server.
 	if strings.ToLower(os.Getenv("SERVE_HTTP")) == "true" {
-		log.Info("Serving gRPC-Gateway on http://", gatewayAddr)
-		log.Info("Serving OpenAPI Documentation on http://", gatewayAddr, "/openapi-ui/")
+		log.Info("Serving gRPC-Gateway and OpenAPI Documentation on http://", gatewayAddr)
 		log.Fatalln(gwServer.ListenAndServe())
 	}
 
 	gwServer.TLSConfig = &tls.Config{
 		Certificates: []tls.Certificate{insecure.Cert},
 	}
-	log.Info("Serving gRPC-Gateway on https://", gatewayAddr)
-	log.Info("Serving OpenAPI Documentation on https://", gatewayAddr, "/openapi-ui/")
+	log.Info("Serving gRPC-Gateway and OpenAPI Documentation on https://", gatewayAddr)
 	log.Fatalln(gwServer.ListenAndServeTLS("", ""))
 }

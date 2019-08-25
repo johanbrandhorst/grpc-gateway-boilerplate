@@ -7,11 +7,11 @@ REST services in Go.
 
 ## Running
 
-Running `main.go` starts a web server on https://0.0.0.0:11000. You can configure
+Running `main.go` starts a web server on https://0.0.0.0:11000/. You can configure
 the port used with the `$PORT` environment variable, and to serve on HTTP set
 `$SERVE_HTTP=true`.
 
-An OpenAPI UI is served on https://0.0.0.0:11000/openapi-ui/
+An OpenAPI UI is served on https://0.0.0.0:11000/.
 
 ## Requirements
 
