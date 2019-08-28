@@ -1,0 +1,12 @@
+name: Go
+on: [push]
+jobs:
+
+  build:
+    name: Build
+    container: golang:latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v1
+    - name: Build
+      run: go build -v ./...
