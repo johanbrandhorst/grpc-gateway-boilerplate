@@ -18,6 +18,8 @@ jobs:
       env:
         PROTOBUF_VERSION: 3.9.1
     steps:
+    - name: Check out code
+      uses: actions/checkout@v1
     - name: Download protoc
       run: >
         apt-get update &&
