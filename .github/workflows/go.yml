@@ -20,6 +20,8 @@ jobs:
     steps:
     - name: Download protoc
       run: >
+        apt-get update &&
+        apt-get install -y unzip &&
         wget https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOBUF_VERSION/protoc-$PROTOBUF_VERSION-linux-x86_64.zip &&
         unzip protoc-$PROTOBUF_VERSION-linux-x86_64.zip -d /usr/local/ &&
         rm -rf protoc-$PROTOBUF_VERSION-linux-x86_64.zip
