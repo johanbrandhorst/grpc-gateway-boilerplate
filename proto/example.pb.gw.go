@@ -45,6 +45,23 @@ func request_UserService_AddUser_0(ctx context.Context, marshaler runtime.Marsha
 
 }
 
+func local_request_UserService_AddUser_0(ctx context.Context, marshaler runtime.Marshaler, server UserServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AddUserRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.AddUser(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 func request_UserService_ListUsers_0(ctx context.Context, marshaler runtime.Marshaler, client UserServiceClient, req *http.Request, pathParams map[string]string) (UserService_ListUsersClient, runtime.ServerMetadata, error) {
 	var protoReq ListUsersRequest
 	var metadata runtime.ServerMetadata
@@ -60,6 +77,41 @@ func request_UserService_ListUsers_0(ctx context.Context, marshaler runtime.Mars
 	metadata.HeaderMD = header
 	return stream, metadata, nil
 
+}
+
+// RegisterUserServiceHandlerServer registers the http handlers for service UserService to "mux".
+// UnaryRPC     :call UserServiceServer directly.
+// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
+func RegisterUserServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server UserServiceServer, opts []grpc.DialOption) error {
+
+	mux.Handle("POST", pattern_UserService_AddUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_UserService_AddUser_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_UserService_AddUser_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_UserService_ListUsers_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
+		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+		return
+	})
+
+	return nil
 }
 
 // RegisterUserServiceHandlerFromEndpoint is same as RegisterUserServiceHandler but
