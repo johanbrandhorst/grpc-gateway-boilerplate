@@ -1,0 +1,35 @@
+name: Go
+on: [push]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container: golang:latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v1
+    - name: Build
+      run: go build -v ./...
+  generate:
+    name: Regenerate files
+    runs-on: ubuntu-latest
+    container: 
+      image: golang:latest
+      env:
+        PROTOBUF_VERSION: 3.9.1
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v1
+    - name: Download protoc
+      run: >
+        apt-get update &&
+        apt-get install -y unzip &&
+        wget https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOBUF_VERSION/protoc-$PROTOBUF_VERSION-linux-x86_64.zip &&
+        unzip protoc-$PROTOBUF_VERSION-linux-x86_64.zip -d /usr/local/ &&
+        rm -rf protoc-$PROTOBUF_VERSION-linux-x86_64.zip
+    - name: Install tools
+      run: make install
+    - name: Regenerate files
+      run: make generate
+    - name: Check for a diff
+      run: git diff --exit-code
