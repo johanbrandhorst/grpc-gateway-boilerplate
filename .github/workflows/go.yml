@@ -4,6 +4,7 @@ jobs:
 
   build:
     name: Build
+    runs-on: ubuntu-latest
     container: golang:latest
     steps:
     - name: Check out code
