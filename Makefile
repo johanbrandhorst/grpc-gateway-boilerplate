@@ -1,5 +1,5 @@
 generate:
-	# Generate go, gRPC-Gateway, swagger output.
+	# Generate go, gRPC-Gateway, OpenAPI output.
 	#
 	# -I declares import folders, in order of importance
 	# This is how proto resolves the protofile imports.
@@ -10,7 +10,7 @@ generate:
 	# 		paths=source_relative means the file should be generated
 	# 		relative to the input proto file.
 	# --grpc-gateway_out generates gRPC-Gateway output.
-	# --swagger_out generates an OpenAPI 2.0 specification for our gRPC-Gateway endpoints.
+	# --openapiv2_out generates an OpenAPI 2.0 specification for our gRPC-Gateway endpoints.
 	#
 	# proto/example.proto is the location of the protofile we use.
 	protoc \
@@ -19,7 +19,7 @@ generate:
 		-I third_party/googleapis \
 		--go_out=plugins=grpc,paths=source_relative:./proto \
 		--grpc-gateway_out=./proto \
-		--swagger_out=third_party/OpenAPI/ \
+		--openapiv2_out=third_party/OpenAPI/ \
 		proto/example.proto
 
 	mv ./proto/github.com/johanbrandhorst/grpc-gateway-boilerplate/proto/* ./proto/
@@ -29,8 +29,8 @@ generate:
 	statik -m -f -src third_party/OpenAPI/
 
 install:
-	GO111MODULE=on go get \
+	go get \
 		github.com/golang/protobuf/protoc-gen-go \
-		github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
-		github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger \
+		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
+		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 \
 		github.com/rakyll/statik

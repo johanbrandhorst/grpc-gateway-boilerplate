@@ -11,7 +11,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rakyll/statik/fs"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -76,14 +76,7 @@ func main() {
 		log.Fatalln("Failed to dial server:", err)
 	}
 
-	jsonpb := &runtime.JSONPb{
-		EmitDefaults: true,
-		Indent:       "  ",
-		OrigName:     true,
-	}
-	gwmux := runtime.NewServeMux(
-		runtime.WithMarshalerOption(runtime.MIMEWildcard, jsonpb),
-	)
+	gwmux := runtime.NewServeMux()
 	err = pbExample.RegisterUserServiceHandler(context.Background(), gwmux, conn)
 	if err != nil {
 		log.Fatalln("Failed to register gateway:", err)

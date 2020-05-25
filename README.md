@@ -25,7 +25,7 @@ for your specific platform.
 After cloning the repo, there are a couple of initial steps;
 
 1. Install the generate dependencies with `make install`.
-   This will install `protoc-gen-go`, `protoc-gen-grpc-gateway`, `protoc-gen-swagger` and `statik` which
+   This will install `protoc-gen-go`, `protoc-gen-grpc-gateway`, `protoc-gen-openapiv2` and `statik` which
    are necessary for us to generate the Go, swagger and static files.
 1. If you forked this repo, or cloned it into a different directory from the github structure,
    you will need to correct the import paths. Here's a nice `find` one-liner for accomplishing this
