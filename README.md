@@ -52,3 +52,20 @@ Once that is done, regenerate the files using
 be implementing the interface defined by the generated file in `proto/example.pb.go`.
 
 This should hopefully be all you need to get started playing around with the gRPC-Gateway!
+
+# Using tracing with OpenCensus and AWS X-ray
+
+Tracing using [OpenCensus](https://opencensus.io/) and exporting the traces to [AWS X-Ray](https://aws.amazon.com/xray/)
+
+The environment variable `$AWS_REGION` has to be set to the region you want to export your traces to.
+
+You must have the X-Ray daemon [running locally](https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon-local.html)
+
+#### Service map
+![Service map](https://user-images.githubusercontent.com/557487/83745016-259c0880-a687-11ea-84a1-58f808e6cb81.png "Service map")
+
+#### GET request
+![GET request](https://user-images.githubusercontent.com/557487/83745181-5e3be200-a687-11ea-8beb-1411a2312c80.png "GET request")
+
+#### POST request
+![POST request](https://user-images.githubusercontent.com/557487/83745213-6dbb2b00-a687-11ea-92c7-97a92b43e399.png "POST request")
