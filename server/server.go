@@ -4,10 +4,12 @@ import (
 	"context"
 	"net/http"
 	"sync"
+	"time"
 
 	"github.com/gofrs/uuid"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	usersv1 "github.com/johanbrandhorst/grpc-gateway-boilerplate/proto/users/v1"
+	"go.opencensus.io/trace"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -30,6 +32,15 @@ func New() *Backend {
 func (b *Backend) AddUser(ctx context.Context, req *usersv1.AddUserRequest) (*usersv1.AddUserResponse, error) {
 	b.mu.Lock()
 	defer b.mu.Unlock()
+
+	// trace.StartSpan starts a new child span of the current span in the context. If
+	// there is no span in the context, creates a new trace and span.
+
+	// Here we add an additional span as an example to show how to do sub spans
+	ctx, span := trace.StartSpan(ctx, "SimulateWorkSubSpan")
+	defer span.End()
+	// Add some wait time to simulate some additional work that we want to trace
+	time.Sleep(time.Millisecond * 2)
 
 	user := &usersv1.User{
 		Id:         uuid.Must(uuid.NewV4()).String(),
