@@ -18,12 +18,9 @@ generate:
 		-I third_party/grpc-gateway/ \
 		-I third_party/googleapis \
 		--go_out=plugins=grpc,paths=source_relative:./proto \
-		--grpc-gateway_out=./proto \
+		--grpc-gateway_out=paths=source_relative:./proto \
 		--openapiv2_out=third_party/OpenAPI/ \
 		proto/example.proto
-
-	mv ./proto/github.com/johanbrandhorst/grpc-gateway-boilerplate/proto/* ./proto/
-	rm -r ./proto/github.com
 
 	# Generate static assets for OpenAPI UI
 	statik -m -f -src third_party/OpenAPI/
