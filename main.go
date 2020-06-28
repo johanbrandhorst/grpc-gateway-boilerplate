@@ -1,22 +1,18 @@
 package main
 
 import (
-	"context"
-	"crypto/tls"
-	"fmt"
 	"io/ioutil"
 	"mime"
 	"net"
 	"net/http"
 	"os"
-	"strings"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rakyll/statik/fs"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
 
+	"github.com/johanbrandhorst/grpc-gateway-boilerplate/gateway"
 	"github.com/johanbrandhorst/grpc-gateway-boilerplate/insecure"
 	pbExample "github.com/johanbrandhorst/grpc-gateway-boilerplate/proto"
 	"github.com/johanbrandhorst/grpc-gateway-boilerplate/server"
@@ -61,53 +57,6 @@ func main() {
 		log.Fatal(s.Serve(lis))
 	}()
 
-	// See https://github.com/grpc/grpc/blob/master/doc/naming.md
-	// for gRPC naming standard information.
-	dialAddr := fmt.Sprintf("dns:///%s", addr)
-	// Create a client connection to the gRPC Server we just started.
-	// This is where the gRPC-Gateway proxies the requests.
-	conn, err := grpc.DialContext(
-		context.Background(),
-		dialAddr,
-		grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(insecure.CertPool, "")),
-		grpc.WithBlock(),
-	)
-	if err != nil {
-		log.Fatalln("Failed to dial server:", err)
-	}
-
-	gwmux := runtime.NewServeMux()
-	err = pbExample.RegisterUserServiceHandler(context.Background(), gwmux, conn)
-	if err != nil {
-		log.Fatalln("Failed to register gateway:", err)
-	}
-
-	oa := getOpenAPIHandler()
-
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "11000"
-	}
-	gatewayAddr := "0.0.0.0:" + port
-	gwServer := &http.Server{
-		Addr: gatewayAddr,
-		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if strings.HasPrefix(r.URL.Path, "/api") {
-				gwmux.ServeHTTP(w, r)
-				return
-			}
-			oa.ServeHTTP(w, r)
-		}),
-	}
-	// Empty parameters mean use the TLS Config specified with the server.
-	if strings.ToLower(os.Getenv("SERVE_HTTP")) == "true" {
-		log.Info("Serving gRPC-Gateway and OpenAPI Documentation on http://", gatewayAddr)
-		log.Fatalln(gwServer.ListenAndServe())
-	}
-
-	gwServer.TLSConfig = &tls.Config{
-		Certificates: []tls.Certificate{insecure.Cert},
-	}
-	log.Info("Serving gRPC-Gateway and OpenAPI Documentation on https://", gatewayAddr)
-	log.Fatalln(gwServer.ListenAndServeTLS("", ""))
+	err = gateway.Run("dns:///" + addr)
+	log.Fatalln(err)
 }
