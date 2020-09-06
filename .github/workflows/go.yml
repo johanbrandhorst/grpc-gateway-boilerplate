@@ -16,7 +16,7 @@ jobs:
     container: 
       image: golang:latest
       env:
-        PROTOBUF_VERSION: 3.12.0
+        PROTOBUF_VERSION: 3.12.4
     steps:
     - name: Check out code
       uses: actions/checkout@v1
