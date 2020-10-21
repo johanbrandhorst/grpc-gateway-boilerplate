@@ -26,20 +26,13 @@ standalone web server instead:
 $ go run ./cmd/standalone/ --server-address dns:///0.0.0.0:10000
 ```
 
-## Requirements
-
-Generating the files requires the `protoc` protobuf compiler.
-Please install it according to the
-[installation instructions](https://github.com/google/protobuf#protocol-compiler-installation)
-for your specific platform.
-
 ## Getting started
 
 After cloning the repo, there are a couple of initial steps;
 
 1. Install the generate dependencies with `make install`.
-   This will install `protoc-gen-go`, `protoc-gen-grpc-gateway`, `protoc-gen-openapiv2` and `statik` which
-   are necessary for us to generate the Go, swagger and static files.
+   This will install `buf`, `protoc-gen-go`, `protoc-gen-go-grpc`, `protoc-gen-grpc-gateway`,
+   `protoc-gen-openapiv2` and `statik` which are necessary for us to generate the Go, swagger and static files.
 1. If you forked this repo, or cloned it into a different directory from the github structure,
    you will need to correct the import paths. Here's a nice `find` one-liner for accomplishing this
    (replace `yourscmprovider.com/youruser/yourrepo` with your cloned repo path):
@@ -47,9 +40,6 @@ After cloning the repo, there are a couple of initial steps;
    $ find . -path ./vendor -prune -o -type f \( -name '*.go' -o -name '*.proto' \) -exec sed -i -e "s;github.com/johanbrandhorst/grpc-gateway-boilerplate;yourscmprovider.com/youruser/yourrepo;g" {} +
    ```
 1. Finally, generate the files with `make generate`.
-   If you encounter an error here, make sure you've installed
-   `protoc` and it is accessible in your `$PATH`, and make sure
-   you've performed step 1.
 
 Now you can run the web server with `go run main.go`.
 
