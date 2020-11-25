@@ -2,12 +2,9 @@ package main
 
 import (
 	"io/ioutil"
-	"mime"
 	"net"
-	"net/http"
 	"os"
 
-	"github.com/rakyll/statik/fs"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
@@ -20,19 +17,6 @@ import (
 	// Static files
 	_ "github.com/johanbrandhorst/grpc-gateway-boilerplate/statik"
 )
-
-// getOpenAPIHandler serves an OpenAPI UI.
-// Adapted from https://github.com/philips/grpc-gateway-example/blob/a269bcb5931ca92be0ceae6130ac27ae89582ecc/cmd/serve.go#L63
-func getOpenAPIHandler() http.Handler {
-	mime.AddExtensionType(".svg", "image/svg+xml")
-
-	statikFS, err := fs.New()
-	if err != nil {
-		panic("creating OpenAPI filesystem: " + err.Error())
-	}
-
-	return http.FileServer(statikFS)
-}
 
 func main() {
 	// Adds gRPC internal logs. This is quite verbose, so adjust as desired!
