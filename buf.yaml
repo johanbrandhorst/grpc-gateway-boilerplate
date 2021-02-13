@@ -1,6 +1,20 @@
 version: v1beta1
+name: buf.build/johan/grpc-gateway-boilerplate
 build:
   roots:
     - proto
-    - third_party/grpc-gateway
-    - third_party/googleapis
+lint:
+  use:
+    - DEFAULT
+  ignore_only:
+    PACKAGE_DIRECTORY_MATCH:
+      - example.proto
+    PACKAGE_VERSION_SUFFIX:
+      - example.proto
+    RPC_REQUEST_RESPONSE_UNIQUE:
+      - example.proto
+    RPC_RESPONSE_STANDARD_NAME:
+      - example.proto
+deps:
+  - buf.build/beta/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
