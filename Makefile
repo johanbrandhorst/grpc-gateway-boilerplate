@@ -1,7 +1,11 @@
 generate:
-	buf generate --path ./proto/example.proto
+	buf generate
 	# Generate static assets for OpenAPI UI
 	statik -m -f -src third_party/OpenAPI/
+
+lint:
+	buf lint
+	buf breaking --against 'https://github.com/johanbrandhorst/grpc-gateway-boilerplate.git#branch=master'
 
 install:
 	go install \
