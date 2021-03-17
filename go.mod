@@ -3,7 +3,6 @@ module github.com/johanbrandhorst/grpc-gateway-boilerplate
 go 1.12
 
 require (
-	github.com/bufbuild/buf v0.37.0
 	github.com/gofrs/uuid v4.0.0+incompatible
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.2.0
 	github.com/rakyll/statik v0.1.7
