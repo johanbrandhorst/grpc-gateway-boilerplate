@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"io/fs"
 	"io/ioutil"
 	"mime"
 	"net/http"
@@ -11,30 +12,25 @@ import (
 	"strings"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/rakyll/statik/fs"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
 
 	"github.com/johanbrandhorst/grpc-gateway-boilerplate/insecure"
 	pbExample "github.com/johanbrandhorst/grpc-gateway-boilerplate/proto"
-
-	// Static files
-	_ "github.com/johanbrandhorst/grpc-gateway-boilerplate/statik"
+	"github.com/johanbrandhorst/grpc-gateway-boilerplate/third_party"
 )
 
 // getOpenAPIHandler serves an OpenAPI UI.
 // Adapted from https://github.com/philips/grpc-gateway-example/blob/a269bcb5931ca92be0ceae6130ac27ae89582ecc/cmd/serve.go#L63
 func getOpenAPIHandler() http.Handler {
 	mime.AddExtensionType(".svg", "image/svg+xml")
-
-	statikFS, err := fs.New()
+	// Use subdirectory in embedded files
+	subFS, err := fs.Sub(third_party.OpenAPI, "OpenAPI")
 	if err != nil {
-		// Panic since this is a permanent error.
-		panic("creating OpenAPI filesystem: " + err.Error())
+		panic("couldn't create sub filesystem: " + err.Error())
 	}
-
-	return http.FileServer(statikFS)
+	return http.FileServer(http.FS(subFS))
 }
 
 // Run runs the gRPC-Gateway, dialling the provided address.

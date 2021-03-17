@@ -13,9 +13,6 @@ import (
 	"github.com/johanbrandhorst/grpc-gateway-boilerplate/insecure"
 	pbExample "github.com/johanbrandhorst/grpc-gateway-boilerplate/proto"
 	"github.com/johanbrandhorst/grpc-gateway-boilerplate/server"
-
-	// Static files
-	_ "github.com/johanbrandhorst/grpc-gateway-boilerplate/statik"
 )
 
 func main() {
