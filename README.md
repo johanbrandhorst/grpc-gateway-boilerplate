@@ -31,8 +31,8 @@ $ go run ./cmd/standalone/ --server-address dns:///0.0.0.0:10000
 After cloning the repo, there are a couple of initial steps;
 
 1. Install the generate dependencies with `make install`.
-   This will install `buf`, `protoc-gen-go`, `protoc-gen-go-grpc`, `protoc-gen-grpc-gateway`,
-   `protoc-gen-openapiv2` and `statik` which are necessary for us to generate the Go, swagger and static files.
+   This will install `buf`, `protoc-gen-go`, `protoc-gen-go-grpc`, `protoc-gen-grpc-gateway` and
+   `protoc-gen-openapiv2` which are necessary for us to generate the Go and swagger files.
 1. If you forked this repo, or cloned it into a different directory from the github structure,
    you will need to correct the import paths. Here's a nice `find` one-liner for accomplishing this
    (replace `yourscmprovider.com/youruser/yourrepo` with your cloned repo path):

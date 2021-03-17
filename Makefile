@@ -1,7 +1,5 @@
 generate:
 	buf generate
-	# Generate static assets for OpenAPI UI
-	statik -m -f -src third_party/OpenAPI/
 
 lint:
 	buf lint
@@ -14,8 +12,7 @@ install:
 		google.golang.org/protobuf/cmd/protoc-gen-go \
 		google.golang.org/grpc/cmd/protoc-gen-go-grpc \
 		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
-		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 \
-		github.com/rakyll/statik
+		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
 	curl -sSL \
     	"https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/buf-$(shell uname -s)-$(shell uname -m)" \
     	-o "$(shell go env GOPATH)/bin/buf" && \
