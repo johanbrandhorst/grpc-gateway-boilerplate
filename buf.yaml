@@ -16,5 +16,5 @@ lint:
     RPC_RESPONSE_STANDARD_NAME:
       - example.proto
 deps:
-  - buf.build/beta/googleapis
+  - buf.build/googleapis/googleapis
   - buf.build/grpc-ecosystem/grpc-gateway
