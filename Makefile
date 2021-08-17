@@ -5,7 +5,7 @@ lint:
 	buf lint
 	buf breaking --against 'https://github.com/johanbrandhorst/grpc-gateway-boilerplate.git#branch=master'
 
-BUF_VERSION:=0.43.2
+BUF_VERSION:=0.51.1
 
 install:
 	go install \
