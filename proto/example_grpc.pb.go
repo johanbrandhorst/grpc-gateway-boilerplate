@@ -11,6 +11,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // UserServiceClient is the client API for UserService service.
@@ -39,7 +40,7 @@ func (c *userServiceClient) AddUser(ctx context.Context, in *AddUserRequest, opt
 }
 
 func (c *userServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (UserService_ListUsersClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_UserService_serviceDesc.Streams[0], "/example.UserService/ListUsers", opts...)
+	stream, err := c.cc.NewStream(ctx, &UserService_ServiceDesc.Streams[0], "/example.UserService/ListUsers", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ type UnsafeUserServiceServer interface {
 }
 
 func RegisterUserServiceServer(s grpc.ServiceRegistrar, srv UserServiceServer) {
-	s.RegisterService(&_UserService_serviceDesc, srv)
+	s.RegisterService(&UserService_ServiceDesc, srv)
 }
 
 func _UserService_AddUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -139,7 +140,10 @@ func (x *userServiceListUsersServer) Send(m *User) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-var _UserService_serviceDesc = grpc.ServiceDesc{
+// UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var UserService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "example.UserService",
 	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
