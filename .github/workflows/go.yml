@@ -6,33 +6,25 @@ jobs:
     runs-on: ubuntu-latest
     container: golang:latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@v1
-    - name: Build
-      run: go build -v ./...
+      - name: Check out code
+        uses: actions/checkout@v1
+      - name: Build
+        run: go build -v ./...
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    container:
-      image: golang:latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@v1
-    - name: Install tools
-      run: make install
-    - name: Lint
-      run: make lint
+      - name: Check out code
+        uses: actions/checkout@v1
+      - name: Lint
+        run: make lint
   generate:
     name: Regenerate files
     runs-on: ubuntu-latest
-    container:
-      image: golang:latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@v1
-    - name: Install tools
-      run: make install && go mod tidy
-    - name: Regenerate files
-      run: make generate
-    - name: Check for a diff
-      run: git diff --exit-code
+      - name: Check out code
+        uses: actions/checkout@v1
+      - name: Regenerate files
+        run: make generate
+      - name: Check for a diff
+        run: git diff --exit-code

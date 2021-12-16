@@ -34,7 +34,6 @@ $ go run ./cmd/standalone/ --server-address dns:///0.0.0.0:10000
 
 After cloning the repo, there are a couple of initial steps;
 
-1. Install `buf` with `make install`, which is necessary for us to generate the Go and OpenAPIv2 files.
 1. If you forked this repo, or cloned it into a different directory from the github structure,
    you will need to correct the import paths. Here's a nice `find` one-liner for accomplishing this
    (replace `yourscmprovider.com/youruser/yourrepo` with your cloned repo path):
