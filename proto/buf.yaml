@@ -1,8 +1,8 @@
-version: v1beta1
+version: v1
 name: buf.build/johan/grpc-gateway-boilerplate
-build:
-  roots:
-    - proto
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
 lint:
   use:
     - DEFAULT
@@ -15,6 +15,3 @@ lint:
       - example.proto
     RPC_RESPONSE_STANDARD_NAME:
       - example.proto
-deps:
-  - buf.build/googleapis/googleapis
-  - buf.build/grpc-ecosystem/grpc-gateway
