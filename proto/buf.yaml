@@ -6,12 +6,3 @@ deps:
 lint:
   use:
     - DEFAULT
-  ignore_only:
-    PACKAGE_DIRECTORY_MATCH:
-      - example.proto
-    PACKAGE_VERSION_SUFFIX:
-      - example.proto
-    RPC_REQUEST_RESPONSE_UNIQUE:
-      - example.proto
-    RPC_RESPONSE_STANDARD_NAME:
-      - example.proto
