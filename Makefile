@@ -1,8 +1,8 @@
-BUF_VERSION:=1.1.0
+BUF_VERSION:=v1.9.0
 
 generate:
-	docker run -v $$(pwd):/src -w /src --rm bufbuild/buf:$(BUF_VERSION) generate
+	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) generate
 
 lint:
-	docker run -v $$(pwd):/src -w /src --rm bufbuild/buf:$(BUF_VERSION) lint
-	docker run -v $$(pwd):/src -w /src --rm bufbuild/buf:$(BUF_VERSION) breaking --against 'https://github.com/johanbrandhorst/grpc-gateway-boilerplate.git#branch=master'
+	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) lint
+	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) breaking --against 'https://github.com/johanbrandhorst/grpc-gateway-boilerplate.git#branch=master'

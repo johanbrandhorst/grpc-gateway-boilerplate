@@ -1,19 +1,13 @@
-syntax="proto3";
+syntax = "proto3";
 
-package example;
+package users.v1;
 
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
-// Defines the import path that should be used to import the generated package,
-// and the package name.
-option go_package = "github.com/johanbrandhorst/grpc-gateway-boilerplate/proto;example";
-
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "1.0";
-  };
+  info: {version: "1.0"};
   external_docs: {
     url: "https://github.com/johanbrandhorst/grpc-gateway-boilerplate";
     description: "gRPC-gateway boilerplate repository";
@@ -22,11 +16,12 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 service UserService {
-  rpc AddUser(AddUserRequest) returns (User) {
+  rpc AddUser(AddUserRequest) returns (AddUserResponse) {
     option (google.api.http) = {
       // Route to this method from POST requests to /api/v1/users
       post: "/api/v1/users"
       body: "*"
+      response_body: "user"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Add a user"
@@ -34,10 +29,11 @@ service UserService {
       tags: "Users"
     };
   }
-  rpc ListUsers(ListUsersRequest) returns (stream User) {
+  rpc ListUsers(ListUsersRequest) returns (stream ListUsersResponse) {
     option (google.api.http) = {
       // Route to this method from GET requests to /api/v1/users
       get: "/api/v1/users"
+      response_body: "user"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "List users"
@@ -49,7 +45,15 @@ service UserService {
 
 message AddUserRequest {}
 
+message AddUserResponse {
+  User user = 1;
+}
+
 message ListUsersRequest {}
+
+message ListUsersResponse {
+  User user = 1;
+}
 
 message User {
   string id = 1;

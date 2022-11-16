@@ -1,5 +1,5 @@
 # Insecure
-Contains self signed certificate couple:
+Contains self signed certificate pair:
 
 ```
 Subject Alternative Names: localhost, IP Address:0.0.0.0, IP Address:127.0.0.1
