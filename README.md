@@ -7,7 +7,7 @@ REST services in Go.
 
 ## Requirements
 
-Go 1.16+
+Go 1.17+
 
 ## Running
 
@@ -38,7 +38,7 @@ After cloning the repo, there are a couple of initial steps;
    you will need to correct the import paths. Here's a nice `find` one-liner for accomplishing this
    (replace `yourscmprovider.com/youruser/yourrepo` with your cloned repo path):
    ```bash
-   $ find . -path ./vendor -prune -o -type f \( -name '*.go' -o -name '*.proto' \) -exec sed -i -e "s;github.com/johanbrandhorst/grpc-gateway-boilerplate;yourscmprovider.com/youruser/yourrepo;g" {} +
+   $ find . -path ./vendor -prune -o -type f \( -name '*.go' -o -name '*.proto' -o -name '*.yaml' \) -exec sed -i -e "s;github.com/johanbrandhorst/grpc-gateway-boilerplate;yourscmprovider.com/youruser/yourrepo;g" {} +
    ```
 1. Finally, generate the files with `make generate`.
 
@@ -47,12 +47,14 @@ Now you can run the web server with `go run main.go`.
 ## Making it your own
 
 The next step is to define the interface you want to expose in
-`proto/example.proto`. See https://developers.google.com/protocol-buffers/
-tutorials and guides on writing protofiles.
+`proto/users/v1/user.proto`. See https://developers.google.com/protocol-buffers/
+tutorials and guides on writing Protobuf files. See the Buf
+[style guide](https://docs.buf.build/best-practices/style-guide#files-and-packages)
+for tips on how to structure your packages.
 
 Once that is done, regenerate the files using
 `make generate`. This will mean you'll need to implement any functions in
 `server/server.go`, or else the build will fail since your struct won't
-be implementing the interface defined by the generated file in `proto/example.pb.go`.
+be implementing the interface defined by the generated files anymore.
 
 This should hopefully be all you need to get started playing around with the gRPC-Gateway!

@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "example.proto",
+    "title": "users/v1/users.proto",
     "version": "1.0"
   },
   "tags": [
@@ -26,18 +26,18 @@
         "operationId": "UserService_ListUsers",
         "responses": {
           "200": {
-            "description": "A successful response.(streaming responses)",
+            "description": "(streaming responses)",
             "schema": {
               "type": "object",
               "properties": {
                 "result": {
-                  "$ref": "#/definitions/exampleUser"
+                  "$ref": "#/definitions/v1User"
                 },
                 "error": {
                   "$ref": "#/definitions/rpcStatus"
                 }
               },
-              "title": "Stream result of exampleUser"
+              "title": "Stream result of v1ListUsersResponse"
             }
           },
           "default": {
@@ -57,9 +57,9 @@
         "operationId": "UserService_AddUser",
         "responses": {
           "200": {
-            "description": "A successful response.",
+            "description": "",
             "schema": {
-              "$ref": "#/definitions/exampleUser"
+              "$ref": "#/definitions/v1User"
             }
           },
           "default": {
@@ -75,7 +75,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/exampleAddUserRequest"
+              "$ref": "#/definitions/v1AddUserRequest"
             }
           }
         ],
@@ -86,17 +86,6 @@
     }
   },
   "definitions": {
-    "exampleAddUserRequest": {
-      "type": "object"
-    },
-    "exampleUser": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        }
-      }
-    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -121,6 +110,33 @@
           "items": {
             "$ref": "#/definitions/protobufAny"
           }
+        }
+      }
+    },
+    "v1AddUserRequest": {
+      "type": "object"
+    },
+    "v1AddUserResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1ListUsersResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
         }
       }
     }

@@ -4,26 +4,37 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    container: golang:latest
+    strategy:
+      matrix:
+        go: ["1.17", "1.18", "1.19"]
     steps:
-      - name: Check out code
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+      - name: Setup go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go }}
       - name: Build
         run: go build -v ./...
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+      - name: Setup go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.19"
       - name: Lint
         run: make lint
   generate:
     name: Regenerate files
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+      - name: Setup go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.19"
       - name: Regenerate files
         run: make generate
       - name: Check for a diff
