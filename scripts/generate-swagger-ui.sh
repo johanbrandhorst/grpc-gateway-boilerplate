@@ -17,7 +17,7 @@ if [[ ! -d "$CACHE_DIR" ]]; then
   mkdir -p "$CACHE_DIR"
   tmp="$(mktemp -d)"
   git clone --depth 1 --branch "$SWAGGER_UI_VERSION" "$SWAGGER_UI_GIT" "$tmp"
-  cp -r "$tmp/dist/" "$CACHE_DIR"
+  cp -r "$tmp/dist/"* "$CACHE_DIR"
   cp -r "$tmp/LICENSE" "$CACHE_DIR"
   rm -rf "$tmp"
 fi
@@ -36,7 +36,7 @@ tmp="$tmp],"
 # recreate swagger-ui, delete all except swagger.json
 find "$GEN_DIR" -type f -not -name "*.swagger.json" -delete
 mkdir -p "$GEN_DIR"
-cp -r "$CACHE_DIR/" "$GEN_DIR"
+cp -r "$CACHE_DIR/"* "$GEN_DIR"
 
 # replace the default URL
 line="$(cat "$GEN_DIR/swagger-initializer.js" | grep -n "url" | cut -f1 -d:)"
