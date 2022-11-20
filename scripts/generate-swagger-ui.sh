@@ -41,4 +41,5 @@ cp -r "$CACHE_DIR/" "$GEN_DIR"
 # replace the default URL
 line="$(cat "$GEN_DIR/swagger-initializer.js" | grep -n "url" | cut -f1 -d:)"
 escaped_tmp="$(escape_str "$tmp")"
-sed -i '' -e "$line s/^.*$/$escaped_tmp/" "$GEN_DIR/swagger-initializer.js"
+sed -i'' -e "$line s/^.*$/$escaped_tmp/" "$GEN_DIR/swagger-initializer.js"
+rm -f "$GEN_DIR/swagger-initializer.js-e"
