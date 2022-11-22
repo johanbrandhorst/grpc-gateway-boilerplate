@@ -12,4 +12,6 @@ of this repository. The static assets are copied from
 of the OpenAPI-UI project. After copying, [`swagger-initializer.js`](./OpenAPI/swagger-initializer.js)
 is edited to load the swagger file from the local server instead of the default petstore.
 
+The steps above can be done automatically by using `make generate/swagger-ui` which is executing [./scripts/generate-swagger-ui.sh](./scripts/generate-swagger-ui.sh). The script will clone the [OpenAPI repo](https://github.com/swagger-api/swagger-ui) with specific version defined by `$SWAGGER_UI_VERSION` and cache it at `./.cache/swagger-ui/$SWAGGER_UI_VERSION` so if the script is running twice using the same version it will use the cache right away.
+
 See the respective LICENSE files for each project for the applicable license terms.
