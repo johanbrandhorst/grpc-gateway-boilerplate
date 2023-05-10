@@ -1,4 +1,4 @@
-BUF_VERSION:=v1.9.0
+BUF_VERSION:=v1.17.0
 SWAGGER_UI_VERSION:=v4.15.5
 
 generate: generate/proto generate/swagger-ui
