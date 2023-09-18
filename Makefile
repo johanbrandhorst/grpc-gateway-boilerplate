@@ -9,4 +9,4 @@ generate/swagger-ui:
 
 lint:
 	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) lint
-	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) breaking --against 'https://github.com/johanbrandhorst/grpc-gateway-boilerplate.git#branch=master'
+	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) breaking --against 'https://github.com/johanbrandhorst/grpc-gateway-boilerplate.git#branch=main'
